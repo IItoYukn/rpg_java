@@ -58,10 +58,10 @@ public class Main {
 			charasList.add(c);
 		}
 		System.out.println(charasList.size());
-		new BattleSystem().classOutput(charasList);
+		//new BattleSystem().classOutput(charasList);
 		charasList=new BattleSystem().b_sort_List(charasList);
 		System.out.println("");
-		new BattleSystem().classOutput(charasList);
+	//	new BattleSystem().classOutput(charasList);
 
 
 
@@ -73,7 +73,7 @@ public class Main {
 
 
 //多態性
-		player.atack(enemy);
+		hero.atack(enemy);
 
 
 
