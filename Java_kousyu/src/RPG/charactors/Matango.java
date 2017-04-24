@@ -11,6 +11,7 @@ public class Matango extends Enemy {
 	public void run(){
 		System.out.println("おばけキノコ"+getSuffix()+"は逃げ出した");
 
+
 	}
 	public char getSuffix() {
 		return suffix;
