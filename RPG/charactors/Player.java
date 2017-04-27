@@ -1,7 +1,7 @@
 package RPG.charactors;
 
 public abstract class Player extends BattleCharactor {
-	protected int money;
+	private int money;
 
 	public abstract void attack(Enemy enemy);
 
@@ -13,5 +13,9 @@ public abstract class Player extends BattleCharactor {
 
 	public void dead() {
 		super.dead();
+	}
+	public void addMone(){
+		money++;
+
 	}
 }

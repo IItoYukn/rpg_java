@@ -7,6 +7,7 @@ public class Matango extends Enemy {
 	public Matango(){
 		this.setHp(30);
 		this.setSpeed(new java.util.Random().nextInt(100));
+		this.setHp(100);
 		this.setName("マタンゴ");
 	}
 	public void run(){

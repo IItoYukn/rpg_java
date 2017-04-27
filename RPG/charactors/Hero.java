@@ -73,8 +73,9 @@ public class Hero extends Player {
 	@Override
 	public void attack(BattleCharactor charactor) {
 		// TODO 自動生成されたメソッド・スタブ
+		if(charactor instanceof Enemy){
 		attack((Enemy)charactor);
-
+		}
 	}
 	public void attack(Enemy enemy){
 		System.out.println(this.name + "の攻撃！");

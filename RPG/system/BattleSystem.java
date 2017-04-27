@@ -1,11 +1,14 @@
 package RPG.system;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import RPG.charactors.BattleCharactor;
 import RPG.charactors.Hero;
 
 public class BattleSystem {
+	private boolean finish = false;
+
 	// 勇者のintステータス上昇ソート 仮にspeed
 	Hero[] sortHero(Hero[] heros) {
 		Hero[] hero = heros.clone();
@@ -30,51 +33,63 @@ public class BattleSystem {
 		return new java.util.Random().nextInt(max);
 	}
 
-	public static void fight(ArrayList<BattleCharactor> chs) {
-		//System.out.println("debug");
-	//	System.out.println(chs.get(0).getClass());
-		//System.out.println("debug");
-		// 早さを乱数で行動順を更新
-		setAttackNumuber( chs);
-		System.out.println("行動順表示");
-		classOutput(chs);
+	public void fight(ArrayList<BattleCharactor> chs) {
 
+		while (!this.finish) {
+			// 早さを乱数で行動順を更新
+			setAttackNumuber(chs);
+			System.out.println("行動順表示");
+			classOutput(chs);
 
+			// 早い順から行動
+			for (int i = 0; i < chs.size(); i++) {
+				// 攻撃対象をランダムに選ぶ
+				BattleCharactor bc = null;
+				bc = chs.get(getRandomWithoutSelf(i, chs.size()));
+				while (chs.get(i).getClass() == bc.getClass() && 0 < bc.getHp()) {
+					// 対象を選ぶ
+					bc = chs.get(getRandomWithoutSelf(i, chs.size()));
+				}
+				System.out.println("");
+				System.out.println(chs.get(i).getName() + "は" + bc.getName() + "に狙いを定めた");
+				System.out.println("");
+				// 回避できたか
+				int random = setRandom(30);
 
-		// 早い順から行動
-		for (int i = 0; i < chs.size(); i++) {
-			//if (chs.get(i).getClass() != chs.get(getRandomWithoutSelf(i,chs.size())).getClass()) {
-			//攻撃対象をランダムに選ぶ
-			BattleCharactor bc=null;
-			bc = chs.get(getRandomWithoutSelf(i,chs.size()));
-			while (chs.get(i).getClass() == bc.getClass()){
-				bc = chs.get(getRandomWithoutSelf(i,chs.size()));
+				resultAvoidance(chs.get(i), bc, random);
 			}
-			//攻撃
 			//
-			System.out.println("");
-			System.out.println(chs.get(i).getName()+"--->"+bc.getName());
-			System.out.println("");
-			chs.get(i).attack(bc);
-			// 回避できたか
-			int random = setRandom(100);
-			resultAvoidance(chs.get(i),bc,random);
-
-			//回避できていたらダメージなし
-			//出来なかったらダメージ
+			removeArrayCharactor(chs);
+			fightFinish(chs);
+			setFinish(true);
 
 		}
-
-
+		battleFinish();
 
 		// attack
 
 	}
-	public static void resultAvoidance(BattleCharactor c1,BattleCharactor c2,int random){
+
+	// bc 攻撃相手
+	public static void resultAvoidance(BattleCharactor c1, BattleCharactor c2, int random) {
+		if (random < 10) {
+			c1.setAvoidance(true);
+
+		} else {
+			c1.setAvoidance(false);
+		}
+		// 回避成功
+		if (c1.isAvoidance()) {
+			// 攻撃失敗処理
+			System.out.println(c2.getName() + "は回避した");
+
+		} else {// 失敗で攻撃
+			c1.attack(c2);
+		}
 
 	}
 
-	public static int getRandomWithoutSelf(int self, int max) {
+	public int getRandomWithoutSelf(int self, int max) {
 		int ans = self;
 		// 自分と違う数値になるまで繰り返し
 		while (ans == self) {
@@ -111,14 +126,68 @@ public class BattleSystem {
 
 	public static void classOutput(ArrayList<BattleCharactor> charactors) {
 		for (int i = 0; i < charactors.size(); i++) {
-			System.out.print((i+1)+"番  ");
+			System.out.print((i + 1) + "番  ");
+			// waitTime(300);
 			System.out.println(charactors.get(i).getName());
 
 		}
 
 	}
 
-	public static void battle() {
+	public void battleFinish() {
+		System.out.println("戦闘終了");
+
+	}
+
+	public static void waitTime(int time) {
+		Date now = new Date();
+
+		System.out.println(now);
+		int counter = 0;
+		while (counter < time) {
+			counter++;
+		}
+	}
+	public void removeArrayCharactor(ArrayList<BattleCharactor> charactors) {
+		for(int i = 0; i<charactors.size();i++){
+			if(charactors.get(i).getHp()<0){
+				charactors.remove(i);
+			}
+		}
+		//charactors.remove(3);
+		System.out.println("残り"+charactors.size());
+
+	}
+
+	public void fightFinish(ArrayList<BattleCharactor> charactors) {
+		// キャラクタが一人になるまでループ]
+		if(charactors.size()==1){
+			setFinish(true);
+		}
+
+	}
+
+	public void setFinish(boolean finish) {
+		this.finish = finish;
+	}
+
+	// 成功判定
+	public static boolean calcCrear(int num, int border) {
+		if (num < border) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// 処理時間計算メソッド
+	public static void calcTime() {
+		long start = System.currentTimeMillis();
+		//
+
+		//
+		long end = System.currentTimeMillis();
+		System.out.println("処理にかかった時間は" + (end - start) + "ミリ秒でした");
 
 	}
 
