@@ -18,6 +18,7 @@ class PrintThread extends Thread {//tread継承
 			System.out.println("例外が発生しました");
 			e.printStackTrace();
 			System.exit(0);
+
 		}
 
 

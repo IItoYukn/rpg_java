@@ -1,5 +1,7 @@
 package RPG.charactors;
 
+import RPG.item.Sword;
+
 public class Hero extends Player {
 
 
@@ -11,7 +13,7 @@ public class Hero extends Player {
 
 		this.setName(str);
 
-		this.hp=100;
+		this.hp=135;
 		setSword(new Sword());
 
 
@@ -19,23 +21,21 @@ public class Hero extends Player {
 		System.out.println("勇者"+this.name+"が誕生した");
 
 	}
-	Hero(){
+	public Hero(){
 		this("ダミー");
 
 
 	}
+	@Override
+	public String toString(){
+		return "名前:"+this.name+"HP : "+this.hp;
+	}
 
-
-
+	@Override
 	public void run() {
 		System.out.println(this.name+"は、撤退した");
 	};
-	public void atack(Enemy enemy){
 
-		super.atack( enemy);//親のメソッド呼び出し
-
-
-	}
 
 	void sit(int sec) {
 		this.hp+=sec;
@@ -61,11 +61,10 @@ public class Hero extends Player {
 
 	private void die(){
 
-		System.out.println(this.name+"は死んでしまった");
+		super.dead();
 		System.out.println("Game Overです。");
 
 	}
-
 
 
 	public Sword getSword() {
@@ -74,6 +73,31 @@ public class Hero extends Player {
 	public void setSword(Sword sword) {
 		this.sword = sword;
 	}
+	@Override
+	public void attack(BattleCharactor charactor) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(charactor instanceof Enemy){
+		attack((Enemy)charactor);
+		}
+	}
+	public void attack(Enemy enemy){
+		System.out.println(this.name + "の攻撃！");
+	    enemy.setHp(enemy.getHp()-sword.getDamage());
+	    System.out.print(enemy.getName()+"に");
+	    System.out.println("10ポイントのダメージを与えた！");
+	}
+	@Override
+	public void Behavior() {
+		// TODO 自動生成されたメソッド・スタブ
+
+		//回避できなかったらアタック
+
+		//回避できたら
+
+
+
+	}
+
 
 
 }

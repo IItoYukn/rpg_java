@@ -1,10 +1,12 @@
 package RPG.charactors;
 
+import RPG.item.Sword;
+
 public class Summoner {
 	private String name;
 	private int hp;
 	private int mp;
-	public  void atack(Matango mat){
+	public  void attack(Matango mat){
 		mat.setHp(mat.getHp() - 10);
 
 	}

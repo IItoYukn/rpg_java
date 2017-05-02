@@ -3,11 +3,21 @@ package RPG.charactors;
 
 public class Wizard {
 	private String name;
+	Hero[] heros;
 	private int hp;
-	void heal(Hero hero){
+
+	public Wizard(){
+		heros = new Hero[9];
+
+		heros[0]=new Hero();
+
+
+	}
+	public void heal(Hero hero){
+
 
 		hero.setHp(hero.getHp()+10);
-		System.out.println(hero.getName()+"のHPを10回復した");
+		System.out.println(heros[0].getName()+"のHPを10回復した"+heros[0].getHp());
 	}
 	public String getName() {
 		return name;
